@@ -1,0 +1,48 @@
+name: Build and test
+
+# When the workflow runs
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # A PostgreSQL container that runs next to the job, for the integration tests
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: university_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci-password
+        ports:
+          - 5432:5432
+        # Wait until PostgreSQL accepts connections before the steps start
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Run unit and integration tests
+        run: ./mvnw -B test
+        env:
+          # Override application.properties so the app uses the CI database
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/university_db
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: ci-password

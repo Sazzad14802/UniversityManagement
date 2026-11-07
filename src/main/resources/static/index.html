@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>University Management System</h1>
+    <button id="logoutBtn" hidden>Logout</button>
+</header>
+
+<main>
+    <section id="loginSection" class="card">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label>Email
+                <input id="email" type="email" required autocomplete="username">
+            </label>
+            <label>Password
+                <input id="password" type="password" required
+                       autocomplete="current-password">
+            </label>
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginMessage" class="message"></p>
+    </section>
+
+    <section id="dashboard" hidden>
+        <div class="welcome">
+            <div>
+                <h2 id="welcomeTitle">Dashboard</h2>
+                <p id="userInfo"></p>
+            </div>
+        </div>
+
+        <nav id="dashboardNav" class="tabs" hidden>
+            <button data-type="students">Students</button>
+            <button data-type="teachers">Teachers</button>
+        </nav>
+
+        <section id="profileSection" class="card" hidden>
+            <h3 id="profileTitle">My Profile</h3>
+            <form id="profileForm" class="form-grid">
+                <label id="emailField">Email<input name="email" type="email" required></label>
+                <label>New password
+                    <input name="password" type="password"
+                           placeholder="Leave blank to keep current password">
+                </label>
+                <label>Full name<input name="name"></label>
+                <label>Phone number<input name="phoneNumber"></label>
+                <label>Department<input name="department"></label>
+                <label id="batchField" hidden>
+                    Batch<input name="batch">
+                </label>
+                <label id="designationField" hidden>
+                    Designation<input name="designation">
+                </label>
+                <button id="saveBtn" type="submit">Save Profile</button>
+            </form>
+            <p id="profileMessage" class="message"></p>
+        </section>
+
+        <section id="managementSection" class="card" hidden>
+            <div class="section-heading">
+                <h3 id="listTitle">Manage Profiles</h3>
+                <button id="addBtn">Add New</button>
+            </div>
+            <p id="managementMessage" class="message"></p>
+            <div class="table-wrapper">
+                <table>
+                    <thead id="tableHead"></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
